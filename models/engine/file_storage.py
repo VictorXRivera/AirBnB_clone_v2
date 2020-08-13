@@ -15,10 +15,9 @@ class FileStorage:
         if cls is not None:
             return FileStorage.__objects
         obj_list = {}
-        # Search for keys and their values in FileStorage objects
-        for key, value in FileStorage.__objects.items():
-            if value.to_dict()['__class__'] == cls.__name__:
-                obj_list[key] = value
+        for key in FileStorage.__objects.keys():
+            if key[:key.index(".")] == cls.__name__:
+                obj_list[key] = FileStorage.__objects[key]
         return obj_list
 
     def new(self, obj):
