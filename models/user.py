@@ -10,6 +10,7 @@ class User(BaseModel, Base):
     Project 7 - Specify string length for attributes to 128
               - Names can be null, but email and password can't
     """
+    __tablename__ = "users"
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
