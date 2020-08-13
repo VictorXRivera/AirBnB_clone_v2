@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
-    """
+    """class for user
     Project 7 - Specify string length for attributes to 128
               - Names can be null, but email and password can't
     """
