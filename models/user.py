@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """
     Project 7 - Specify string length for attributes to 128
               - Names can be null, but email and password can't
