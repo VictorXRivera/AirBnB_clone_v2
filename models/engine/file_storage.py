@@ -10,7 +10,7 @@ class FileStorage:
 
     def all(self, cls=None):
         """ Updating def all to return list of objects of one type of class. """
-        if cls is not None:
+        if cls is None:
             return FileStorage.__objects
         obj_list = {}
         for key in FileStorage.__objects.keys():
@@ -60,7 +60,7 @@ class FileStorage:
         Updating function to delete obj from __objects if its inside
         Or if obj is equal to None, do nothing
         """
-        if obj is not None:
+        if obj is None:
             return
         key = "" + obj.to_dict()['__class__'] + '.' + obj.id
         self.all().pop(key, None)
