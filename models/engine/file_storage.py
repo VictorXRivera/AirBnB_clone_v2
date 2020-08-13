@@ -14,13 +14,12 @@ class FileStorage:
         """
         if cls is not None:
             return FileStorage.__objects
-        else:
-            obj_list = {}
-            # Search for keys and their values in FileStorage objects
-            for key, value in FileStorage.__objects.items():
-                if value.to_dict()['__class__'] == cls.__name__:
-                    obj_list[key] = value
-            return obj_list
+        obj_list = {}
+        # Search for keys and their values in FileStorage objects
+        for key, value in FileStorage.__objects.items():
+            if value.to_dict()['__class__'] == cls.__name__:
+                obj_list[key] = value
+        return obj_list
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -65,10 +64,9 @@ class FileStorage:
         Or if obj is equal to None, do nothing
         """
         if obj is not None:
-            # Turning obj into a dictionary and storing in variable
-            # named key
-            key = obj.to_dict()['__class__'] + "." + obj.id
-            # If we find obj, delete and then save
-            if key in self.all().keys():
-                del self.all()[key]
-                self.save()
+            return
+        # Turning the objects into a dictionary and then
+        # popping the key/deleting the object
+        key = "" + obj.to_dict()['__class__'] + '.' + obj.id
+        self.all().pop(key, None)
+        self.save()
