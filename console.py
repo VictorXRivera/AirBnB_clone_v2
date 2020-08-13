@@ -23,6 +23,19 @@ class HBNBCommand(cmd.Cmd):
                'State': State, 'City': City, 'Amenity': Amenity,
                'Review': Review
               }
+    # Class attributes
+    class_attrs = {
+                   'Place': ['city_id', 'user_id', 'name', 'number_rooms',
+                             'number_bathrooms', 'max_guest', 'price_by_night',
+                             'latitude', 'longitude', 'description',
+                             'amenity_ids'],
+                   'BaseModel': ['id', 'updated_at', 'created_at'],
+                   'User': ['email', 'password', 'first_name', 'last_name'],
+                   'State': ['name'],
+                   'City': ['name', 'state_id'],
+                   'Amenity': ['name'],
+                   'Review': ['place_id', 'user_id', 'text']
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
              'number_rooms': int, 'number_bathrooms': int,
@@ -115,14 +128,59 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        # Splitting line to turn into list containing all words in the string
+        # separated by spaces
+        args = args.split()
+
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        new_instance = HBNBCommand.classes[args[0]]()
+
+        # Case of if more arguments are being passed. Ex. <key name>=<value>
+        if len(args) > 1:
+            # Checking every argument after the first
+            for string in args[1:]:
+                # Skip args if it doesn't match parameter <key name>=<value>
+                if '=' not in string or string[0] == '=' or string[-1] == '=':
+                    continue
+
+                # para_first is the key name before the '='
+                para_first = string[:string.find('=')]
+
+                # If the key name isn't apart of the HBNB classes, skip it
+                if para_first not in HBNBCommand.class_attrs[args[0]]:
+                    continue
+
+                # para_after is everything after the '='
+                # Note: string.find('=') is finding an instance
+                # of the '='
+                para_after = string[string.find('=') + 1:]
+
+                # Here if it finds double quotes, then label as string
+                # Else if incomplete quotes are found, then skip
+                # Else no quotes, then label as either int or float
+                if para_after[0] == '"' and para_after[-1] == '"':
+                    para_after = para_after[1:-1]
+                    para_type = str
+                elif para_after[0] == '"' or para_after[-1] == '"':
+                    continue
+                else:
+                    if '.' in para_after:
+                        para_type = float
+                    else:
+                        para_type = int
+
+                # The part where underscores are replaced with spaces
+                para_after = para_after.replace("_", " ")
+
+                # Now we set attributes
+                setattr(new_instance, para_first, para_type(para_after))
+
+        storage.new(new_instance)
         print(new_instance.id)
         storage.save()
 

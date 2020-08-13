@@ -9,23 +9,14 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """
-        Project 5 - update all to return list of objects of one type of class
-                  - If class exists, initialize a dictionary helper to 
-                    update dictionary for printing.
-                  - For key, values specifies the items stored for the 
-                    __objects in the FileStorage class
-                  - If cls has a __name__ in key, update key's values using
-                    dictionary help else return __objects in FileStorage class
-        """
-        if cls is not None:
-            dict_help = {}
-            for key, values in FileStorage.__objects.items():
-                if(cls.__name__ in key):
-                    dict_help.update({key: values})
-            return dict_help
-        else:
-            return self.__objects
+        """ Updating def all to return list of objects of one type of class. """
+        if cls is None:
+            return FileStorage.__objects
+        obj_list = {}
+        for key in FileStorage.__objects.keys():
+            if key[:key.index(".")] == cls.__name__:
+                obj_list[key] = FileStorage.__objects[key]
+        return obj_list
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -66,9 +57,11 @@ class FileStorage:
 
     def delete(self, obj=None):
         """
-        Project 5 - delete obj from __objects if it's inside
-                  - temp helps format (ie. name.id) for deletion
+        Updating function to delete obj from __objects if its inside
+        Or if obj is equal to None, do nothing
         """
-        if obj is not None:
-            temp = (type(obj).__name__) + '.' + obj.__dict__['id']
-            del self.__objects[temp]
+        if obj is None:
+            return
+        key = "" + obj.to_dict()['__class__'] + '.' + obj.id
+        self.all().pop(key, None)
+        self.save()
