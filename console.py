@@ -163,10 +163,10 @@ class HBNBCommand(cmd.Cmd):
                 # Here if it finds double quotes, then label as string
                 # Else if incomplete quotes are found, then skip
                 # Else no quotes, then label as either int or float
-                if para_after[0] == '"' and para_after[-1] '"':
+                if para_after[0] == '"' and para_after[-1] == '"':
                     para_after = para_after[1:-1]
                     para_type = str
-                elif para_after[0] == '"' or para_after[-1] '"':
+                elif para_after[0] == '"' or para_after[-1] == '"':
                     continue
                 else:
                     if '.' in para_after:
