@@ -10,22 +10,17 @@ class FileStorage:
 
     def all(self, cls=None):
         """
-        Project 5 - update all to return list of objects of one type of class
-                  - If class exists, initialize a dictionary helper to 
-                    update dictionary for printing.
-                  - For key, values specifies the items stored for the 
-                    __objects in the FileStorage class
-                  - If cls has a __name__ in key, update key's values using
-                    dictionary help else return __objects in FileStorage class
+        Updating def all to return list of objects of one type of class.
         """
         if cls is not None:
-            dict_help = {}
-            for key, values in FileStorage.__objects.items():
-                if(cls.__name__ in key):
-                    dict_help.update({key: values})
-            return dict_help
+            return FileStorage.__objects
         else:
-            return self.__objects
+            obj_list = {}
+            # Search for keys and their values in FileStorage objects
+            for key, value in FileStorage.__objects.items():
+                if value.to_dict()['__class__'] == cls.__name__:
+                    obj_list[key] = value
+            return obj_list
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -65,10 +60,15 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """
-        Project 5 - delete obj from __objects if it's inside
-                  - temp helps format (ie. name.id) for deletion
+        """ 
+        Updating function to delete obj from __objects if its inside
+        Or if obj is equal to None, do nothing
         """
         if obj is not None:
-            temp = (type(obj).__name__) + '.' + obj.__dict__['id']
-            del self.__objects[temp]
+            # Turning obj into a dictionary and storing in variable
+            # named key
+            key = obj.to_dict()['__class__'] + "." + obj.id
+            # If we find obj, delete and then save
+            if key in self.all().keys():
+                del self.all()[key]
+                self.save()
