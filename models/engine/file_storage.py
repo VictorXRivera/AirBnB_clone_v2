@@ -9,9 +9,7 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """
-        Updating def all to return list of objects of one type of class.
-        """
+        """ Updating def all to return list of objects of one type of class. """
         if cls is not None:
             return FileStorage.__objects
         obj_list = {}
@@ -58,14 +56,12 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """ 
+        """
         Updating function to delete obj from __objects if its inside
         Or if obj is equal to None, do nothing
         """
         if obj is not None:
             return
-        # Turning the objects into a dictionary and then
-        # popping the key/deleting the object
         key = "" + obj.to_dict()['__class__'] + '.' + obj.id
         self.all().pop(key, None)
         self.save()
