@@ -22,3 +22,4 @@ class City(BaseModel):
     else:
         name = ""
         state_id = ""
+>>>>>>> 1d1fef7f259f9c575c95093e1f7faf512d4734b8
