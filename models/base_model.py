@@ -27,10 +27,10 @@ class BaseModel:
         else:
             if 'updated_at' in kwargs.keys():
                 kwargs['updated_at'] = datetime.strptime(
-                        kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+                    kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
             if 'created_at' in kwargs.keys():
                 kwargs['created_at'] = datetime.strptime(
-                        kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
             if '__class__' in kwargs.keys():
                 del kwargs['__class__']
             self.__dict__.update(kwargs)
@@ -65,4 +65,4 @@ class BaseModel:
 
     def delete(self):
         """ Adding delete method to delete current instance """
-        models.storage.delete()
+        models.storage.delete(self)
