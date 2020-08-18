@@ -33,6 +33,5 @@ def do_deploy(archive_path):
         # On success, return True
         print('New version deployed!')
         return True
-
     except:
         return False
