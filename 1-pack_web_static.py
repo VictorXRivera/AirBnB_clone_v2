@@ -7,8 +7,7 @@ using the function do_pack
 
 
 def do_pack():
-    """
-    
+    """    
     The function do_pack must return the archive path 
     if the archive has been correctly generated. 
     Otherwise, it should return None
