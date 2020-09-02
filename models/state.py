@@ -15,10 +15,8 @@ class State(BaseModel):
     __tablename__ = 'states'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         name = Column(String(128), nullable=False)
-        cities = relationship(
-                'City',
-                cascade="all, delete-orphan",
-                backref="state")
+        cities = relationship('City', cascade="all, delete-orphan",
+                              backref="state")
     else:
         name = ""
 
@@ -30,3 +28,7 @@ class State(BaseModel):
                 if item.state_id == self.id:
                     city_item.append(item)
             return city_item
+
+    def __init__(self, *args, **kwargs):
+        """This is the initialization method"""
+        super(State, self).__init__(*args, **kwargs)
