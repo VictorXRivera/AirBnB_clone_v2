@@ -36,9 +36,10 @@ def number_route(n):
     return "%d is a number" % n
 
 
-@app.route('/number_template/<int:n>', method=['GET'], strict_slashes=False)
+@app.route('/number_template/<int:n>', strict_slashes=False)
 def num_render_template(n):
     """ Number template function """
+    from flask import render_template
     return render_template('5-number.html', n=n)
 
 
