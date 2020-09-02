@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Making a Flask script """
-from flask import Flask, render_template
+from flask import Flask, escape, request
 
 
 app = Flask(__name__)
@@ -39,17 +39,19 @@ def number_route(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def num_render_template(n):
     """ Number template function """
+    from flask import render_template
     return render_template('5-number.html', n=n)
 
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def num_odd_or_even(n):
     "Odd or even num template"
+    from flask import render_template
     if n % 2 == 0:
         oe = 'even'
     else:
         oe = 'odd'
-    return render_template('6-number_odd_or_even.html', n=n, eo=eo)
+    return render_template('6-number_odd_or_even.html', n=n, oe=oe)
 
 
 if __name__ == "__main__":
