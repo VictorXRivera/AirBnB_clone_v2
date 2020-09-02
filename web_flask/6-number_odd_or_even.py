@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Making a Flask script """
-from flask import Flask, escape, request, render_template
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
