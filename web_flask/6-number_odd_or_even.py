@@ -48,10 +48,9 @@ def num_odd_or_even(n):
     "Odd or even num template"
     from flask import render_template
     if n % 2 == 0:
-        oe = 'even'
+        return render_template('6-number_odd_or_even.html', n=n, num='even')
     else:
-        oe = 'odd'
-    return render_template('6-number_odd_or_even.html', n=n, oe=oe)
+        return render_template('6-number_odd_or_even.html', n=n, num='odd')
 
 
 if __name__ == "__main__":
