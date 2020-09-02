@@ -3,8 +3,9 @@
 
 from flask import Flask, escape, request
 app = Flask(__name__)
+strict_slashes = False
+
 
 @app.route('/')
 def hello_HBNB():
-	strict_slashes=False
-	return 'Hello HBNB!'
+        return 'Hello HBNB!'
